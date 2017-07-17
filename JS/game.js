@@ -3,13 +3,22 @@ window.onload = function(){
   game = new Scrabble();
   createBoard();
   getTiles();
-  hidePlayerBoard();
+
+  // hidePlayerBoard();
+  // $('.tile').click(function (){
+  //     var text = $(this).text();
+  //     var id = $(this).context.id;
+  //     var tile = {id: id, value:text};
+  //     game.
+  //
+  // });
+
 };
 
 //scoreFunctions
 function playWord(){
  game.checkWords();
- console.log(game.incorrectWord);
+ console.log(game);
  game.incorrectWord !== true ? nextTurn() : replay();
 }
 
@@ -18,12 +27,13 @@ function nextTurn(){
   game.addScore();
   $(`#${game.playerTurn.name}`).text(game.playerTurn.score);
   game.changePlayer();
-  hidePlayerBoard();
+  // hidePlayerBoard();
   getTiles();
 }
 
 function replay(){
-  game.word = [];
+  game.temporaryPoints = 0;
+  game.incorrectWord = false;
   console.log("incorrectWord");
 }
 
@@ -32,7 +42,7 @@ function hidePlayerBoard(){
   game.playerTurn.name === "playerOne" ? $(".playerScoreBoards:eq( 1 )").fadeTo( 1, 0.3): $(".playerScoreBoards:eq( 0 )").fadeTo( 1, 0.3);
 }
 
-//game functions
+//Game functions to create the game.
 function createBoard ()  {
   for(var i = 0; i < game.boardGrid.length; i++) {
     var boardGrids = game.boardGrid[i];
@@ -53,17 +63,28 @@ function createBoard ()  {
   }
 }
 
-function removeTiles() {
-  game.playerTurn.tiles.forEach((tile)=>{
-    $('#' + tile.id).remove();
-  });
-}
-
 function getTiles() {
   game.fillArrayOfLetters();
   game.playerTurn.tiles.forEach((tile)=>{
-    var newTile = $("<span>").addClass('tile').attr( 'id', tile.id).attr('draggable','true').attr('ondragstart','drag(event)').text(tile.title);
+    var newTile = $("<div>").addClass('tile').attr( 'id', tile.id).attr('draggable','true').attr('ondragstart','drag(event)').text(tile.title);
+    var score = $("<span>").text(tile.points).addClass('tilePoints');
+    newTile.append(score);
     $('#tileHolder').append(newTile);
+  });
+}
+
+function swap(){
+  removeTiles();
+  game.letterSwap();
+  getTiles();
+  removeTiles();
+  game.changePlayer();
+  getTiles();
+}
+
+function removeTiles() {
+  game.playerTurn.tiles.forEach((tile)=>{
+    $('#' + tile.id).remove();
   });
 }
 
@@ -89,14 +110,15 @@ function drop(ev) {
   var valueSpanElement = ev.dataTransfer.getData("value");
   if (ev.target.parentNode.id === "tileHolder") {
     ev.target.parentNode.appendChild(document.getElementById(data));
-  } else if (ev.target.nodeName === "DIV"){
+  } else if (ev.target.parentNode.id === "board"){
+    console.log(ev);
     var tile = {value: valueSpanElement, position: ev.target.id, id: data, specialCell: ev.target.textContent};
     ev.target.textContent = '';
     ev.target.appendChild(document.getElementById(data));
     game.currentBoard[ev.target.id.split('-')[0]][ev.target.id.split('-')[1]] = tile;
     game.word.unshift(tile);
-    game.playerTurn.tiles = game.playerTurn.tiles.filter((tileObject)=>{
-    return tileObject.id !== parseInt(data);
-});
+//     game.playerTurn.tiles = game.playerTurn.tiles.filter((tileObject)=>{
+//     return tileObject.id !== parseInt(data);
+// });
   }
 }
