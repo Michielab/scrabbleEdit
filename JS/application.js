@@ -92,7 +92,7 @@ Scrabble.prototype.takeLetterBack = function(position,tile){
 
 Scrabble.prototype.letterSwap = function(){
   this.playerTurn.tiles.forEach((letter,index)=>{
-     this.tiles.push(letter.title);
+     this.tiles.push(letter.title + ","+letter.points);
   });
   this.playerTurn.tiles = [];
 };
@@ -104,9 +104,7 @@ Scrabble.prototype.sortWordArray = function() {
 };
 
 Scrabble.prototype.checkWords = function() {
-  // this.incorrectWord = false;
   this.sortWordArray();
-  console.log("checkWords",this.word);
   var startPositionLeft = this.word[0];
   var startPositionTop = this.word[0];
   if(this.currentBoard[startPositionLeft.position.split("-")[0]][parseInt(startPositionLeft.position.split('-')[1]) - 1] !== f){
@@ -117,7 +115,6 @@ Scrabble.prototype.checkWords = function() {
   for(var j = 0; this.currentBoard[parseInt(this.word[0].position.split("-")[0]) - j][parseInt(this.word[0].position.split('-')[1])] !== f;j++){
     startPositionTop.position = (parseInt(this.word[0].position.split('-')[0]) - j )+ "-" + (parseInt(this.word[0].position.split('-')[1]));
   }}
-  console.log(startPositionTop);
    this.currentBoard[startPositionLeft.position.split("-")[0]][parseInt(startPositionLeft.position.split('-')[1]) + 1] !== f ? this.checkLeftToRight(startPositionLeft):"";
    this.currentBoard[parseInt(startPositionTop.position.split("-")[0]) + 1][parseInt(startPositionTop.position.split('-')[1])] !== f ? this.checkTopToButtom(startPositionTop):"";
 };
@@ -140,60 +137,34 @@ Scrabble.prototype.checkTopToButtom = function(startPositionTop) {
 
 
 Scrabble.prototype.checkIfWordIsCorrect = function(wordArray) {
+  console.log(wordArray);
   var word = wordArray.map((element)=>{
-    return element.value.toLowerCase();
+    return element.value.split('')[0].toLowerCase();
   });
   allWords.indexOf(word.join('')) !== -1 ? this.getPoints(wordArray) : this.incorrectWord = true;
 };
 
 Scrabble.prototype.getPoints = function(word) {
-  console.log("word",word);
  var score = 0;
+ var timesWord = 1;
  word.forEach((letter)=>{
    this.removeTilesFromPlayerArray(letter);
-  switch(letter.value){
-    case "A":
-    case "E":
-    case "I":
-    case "O":
-    case "U":
-    case "L":
-    case "N":
-    case "S":
-    case "T":
-    case "R":
-    score++;
-    break;
-    case "D":
-    case "G":
-    score += 2;
-    break;
-    case "B":
-    case "C":
-    case "M":
-    case "P":
-    score += 3;
-    break;
-    case "F":
-    case "H":
-    case "V":
-    case "W":
-    case "Y":
-    score += 4;
-    break;
-    case "K":
-    score += 5;
-    break;
-    case "J":
-    case "X":
-    score += 8;
-    break;
-    case "Q":
-    case "Z":
-    score += 10;
-    break;
-  }
+   if(letter.specialCell) {
+     if(letter.specialCell === "DL"|| letter.specialCell === "S") {
+       score += (parseInt(letter.value.split('')[1]) * 2);
+     } else if (letter.specialCell === "TL") {
+       score += (parseInt(letter.value.split('')[1]) * 3);
+     } else if (letter.specialCell === "DW")  {
+       timesWord += 2;
+     } else if (letter.specialCell === "TW")  {
+       timesWord += 3;
+     }
+     letter.specialCell = "";
+   } else {
+     score += parseInt(letter.value.split('')[1]);
+   }
  });
+ score *= timesWord;
  this.temporaryPoints += score;
  this.word = [];
 };

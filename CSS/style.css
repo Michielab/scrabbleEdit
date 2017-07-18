@@ -200,22 +200,15 @@ body{
 
   .play{
     width: 100%;
-    height: 25%;
+    height: 30%;
     color: white;
     background-color: #79D794;
-  }
-
-  .challenge{
-    width: 100%;
-    height: 25%;
-    color: white;
-    background-color: #FB4B83;
   }
 
   .swap{
     /*margin-top: 42%;*/
     width: 100%;
-    height: 25%;
+    height: 30%;
     color: white;
     background-color: #378CBC;
   }
@@ -228,7 +221,7 @@ body{
   }
 
   .scoreBoarder{
-    height: 25%;
+    height: 30%;
     border-style: ridge;
   }
 
@@ -265,6 +258,7 @@ body{
     z-index: auto;
     font-weight: bold;
     font-size: 1.3em;
+    z-index:1
   }
 
   .tilePoints{
@@ -276,6 +270,12 @@ body{
     padding-left: 10%;
     padding-top: 10%
 
+  }
+
+  #tilesLeft{
+    font-size: 3em;
+    color: white
+    /*color: #FB4B83;*/
   }
 
 }
