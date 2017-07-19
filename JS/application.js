@@ -91,7 +91,9 @@ Scrabble.prototype.takeLetterBack = function(position,tile){
 };
 
 Scrabble.prototype.letterSwap = function(){
-  this.playerTurn.tiles.forEach((letter,index)=>{
+  var swapArray = [];
+  this.swapLetters ? swapArray = game.swapLetters : swapArray = this.playerTurn.tiles;
+  swapArray.tiles.forEach((letter,index)=>{
      this.tiles.push(letter.title + ","+letter.points);
   });
   this.playerTurn.tiles = [];

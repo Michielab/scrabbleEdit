@@ -278,4 +278,9 @@ body{
     /*color: #FB4B83;*/
   }
 
+  .color {
+    border-color: #FB4B83;
+    /*background-color: yellow;*/
+  }
+
 }
