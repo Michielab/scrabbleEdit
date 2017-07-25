@@ -5,43 +5,37 @@ window.onload = function(){
   getTiles();
   allowDropOnCell();
   hidePlayerBoard();
-  $("#tilesLeft").text(`${game.tiles.length} tiles left`);
-
-
-
-  var tile = $('.tile').click(function(e) {
-    var letter = e.currentTarget.innerText.split('')[0];
-    var points = e.currentTarget.innerText.split('')[1];
-    var id = e.target.id;
-    var tile = {letter, points,id};
-    // console.log(tile);
-    // console.log(id);
-    e.target.className.split(' ').length > 1 ? $(this).removeClass("color") :  $(this).addClass("color");
-    game.swapLetters.push(tile);
-    console.log(e.target.className.split(' ').length);
-    if(e.target.className.split(' ').length > 1){
-    var array = game.swapLetters.filter((tileObject)=>{
-      console.log(tileObject.id);
-      console.log(id);
-    return tileObject.id !== id;
-    });
-    console.log(game.swapLetters);
-    console.log(array);
-  }
-    // game.playerTurn.til
-    // console.log(tile.attr("class"));
-      // tile.removeClass(addclass);
-
-    //  $('#'+ e.target.id).removeClass(addclass);
-    //
-
-});
+  $("#numberTiles").text(game.tiles.length);
+  click()
 };
+
+function click (){
+    var tile = $('.tile').click(function(e) {
+      var letter = e.currentTarget.innerText.split('')[0];
+      var points = e.currentTarget.innerText.split('')[1];
+      var id = e.target.id;
+      var tile = {letter, points,id};
+      var that = this;
+      e.target.className.split(' ').length > 1 ? takeLetters(that,id): pickLetterForSwap(that,tile) ;
+    });
+}
+
+function takeLetters (that,id){
+  $(that).removeClass("color");
+  game.swapLetters = game.swapLetters.filter((tileObject)=>{
+  return tileObject.id !== id;
+  });
+}
+
+function pickLetterForSwap(that,tile){
+  $(that).addClass("color");
+  game.swapLetters.push(tile);
+}
 
 //Game functions
 function playWord(){
  game.checkWords();
- game.incorrectWord !== true ? nextTurn() : replay();
+ game.incorrectWord !== true ? nextTurn() : game.replay();
 }
 
 function nextTurn(){
@@ -53,11 +47,8 @@ function nextTurn(){
   getTiles();
   $("#tilesLeft").text(`${game.tiles.length} tiles left`);
   hidePlayerBoard();
-}
-
-function replay(){
-  game.temporaryPoints = 0;
-  game.incorrectWord = false;
+  click();
+  console.log("game", game)
 }
 
 function getTiles() {
@@ -78,25 +69,26 @@ function swap(){
   game.changePlayer();
   getTiles();
   hidePlayerBoard();
+  click()
 }
 
 function removeTiles(){
   var swapArray = [];
-  game.swapLetters ? swapArray = game.swapLetters : swapArray = game.playerTurn.tiles;
+  game.swapLetters === [] ? swapArray = game.swapLetters : swapArray = game.playerTurn.tiles;
   swapArray.forEach((tile)=>{
     $('#' + tile.id).remove();
   });
+  game.swapArray = [];
 }
 
 function hidePlayerBoard(){
   if(game.playerTurn.name === "playerOne"){
-    $(".playerScoreBoards:eq( 1 )").fadeTo( 1, 0.3);
+    $(".playerScoreBoards:eq( 1 )").fadeTo( 1, 0.1);
     $(".playerScoreBoards:eq( 0 )").fadeTo( 1, 1);
   } else {
-    $(".playerScoreBoards:eq( 0 )").fadeTo( 1, 0.3);
+    $(".playerScoreBoards:eq( 0 )").fadeTo( 1, 0.1);
     $(".playerScoreBoards:eq( 1 )").fadeTo( 1, 1);
   }
-
 }
 
 //functions to remove drag and drop attributes
@@ -124,8 +116,6 @@ function allowDropOnCell(){
   }
 }
 
-
-
 //drag and drop functions
 function allowDrop(ev, el) {
   ev.preventDefault();
@@ -133,7 +123,6 @@ function allowDrop(ev, el) {
 
 
 function drag(ev,el) {
-  console.log(  $('#'+ ev.target.id).attr( "alt") );
   if(ev.target.parentNode.parentNode.id === "board") {
     if(game.currentBoard[ev.target.parentNode.id.split('-')[0]][ev.target.parentNode.id.split('-')[1]] !== false){
       game.currentBoard[ev.target.parentNode.id.split('-')[0]][ev.target.parentNode.id.split('-')[1]] = f;

@@ -8,19 +8,12 @@ body{
 }
 
 #container {
-  padding-top: 5%;
-  /*overflow:hidden*/
-  /*display: -webkit-flex;
-  display:         flex;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;*/
+  padding-top: 2%;
 }
 
 #board {
-  width: 80%;
-  height: 70vh;
+  width: 70vw;
+  height: 65vh;
   display: -webkit-flex;
   display: flex;
   -webkit-align-items: center;
@@ -35,163 +28,78 @@ body{
 }
 
 .cellN{
-  width: 5.5%;
+  width: 5.4%;
   height: 6%;
   border-style: ridge;
   display: flex;
-  background-color: 	#778899;
+  background-color: #edf5f4;
 }
 
 .cellG {
-  width: 5.5%;
+  width: 5.4%;
   height: 6%;
   border-style: ridge;
-  background-color: darkgreen;
+  background-color: #79D794;
   color: white;
   text-align: center;
   vertical-align: top;
-  line-height: 2em;
+  font-size: 2vw;
 }
 
 .cellB {
-  width: 5.5%;
+  width: 5.4%;
   height: 6%;
   border-style: ridge;
-  background-color: #1E90FF;
+  background-color: #378CBC;
   color: white;
   text-align: center;
   vertical-align: top;
-  line-height: 2em;
+  font-size: 2vw;
 }
 
 .cellY {
-  width: 5.5%;
+  width: 5.4%;
   height: 6%;
   border-style: ridge;
   /*background-color: #FFCCBB;*/
   color: white;
   text-align: center;
   vertical-align: top;
-  line-height: 2em;
+  font-size: 2vw;
 }
 
 .cellR {
-  width: 5.5%;
+  width: 5.4%;
   height: 6%;
   border-style: ridge;
-  background-color: red;
+  background-color: #FB4B83;
   color: white;
   text-align: center;
   vertical-align: top;
-  line-height: 2em;
+  font-size: 2vw;
 }
 
 .cellS {
-  width: 5.5%;
+  width: 5.4%;
   height: 6%;
   border-style: ridge;
-  /*background-color: pink;*/
   color: white;
   text-align: center;
   vertical-align: top;
-  line-height: 2em;
+  font-size: 2vw;
 }
 
-@media (min-width: 992px){
-  #board {
-    width: 55%;
-    height: 60vh;
-  }
-
-  .cellN{
-    width: 5.7%;
-    height: 7%;
-    /*border-style: ridge;*/
-    background-color: 	#edf5f4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cellG {
-    width: 5.7%;
-    height: 7%;
-    border-style: ridge;
-    background-color: #79D794;
-    color: white;
-    line-height: 3em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cellB {
-    width: 5.7%;
-    height: 7%;
-    border-style: ridge;
-    background-color: #378CBC;
-    color: white;
-    line-height: 3em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cellY {
-    width: 5.7%;
-    height: 7%;
-    border-style: ridge;
-    /*background-color: #FF8C00;*/
-    color: white;
-    border-style: ridge;
-    text-align: center;
-    line-height: 3em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cellR {
-    width: 5.7%;
-    height: 7%;
-    border-style: ridge;
-    background-color: #FB4B83;
-    color: white;
-    text-align: center;
-    line-height: 3em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cellS {
-    width: 5.7%;
-    height: 7%;
-    border-style: ridge;
-    display: flex;
-    /*background-image: url("star.png");*/
-
-    /*background-color: pink;*/
-    color: white;
-    line-height: 3em;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-
-  }
-
-  .scoreBoards{
+.scoreBoards{
     float: left;
-    margin: 2% 10% 0 4%;
-    height: 85%;
-    width: 15%;
-    /*border: solid 2px black;*/
+    margin: 2% 1% 0 4%;
+    height: 20vh;
+    width: 15vw;
   }
 
   .playerScoreBoards{
-    margin-top: 15%;
-    height: 30%;
-    width: 80%;
+    margin-top: 13%;
+    height: 30vh;
+    width: 80vw;
     background-color: 	#edf5f4;
     border-style: ridge;
     overflow: visible;
@@ -199,46 +107,37 @@ body{
   }
 
   .play{
-    width: 100%;
-    height: 30%;
+    width: 100vw;
+    height: 32.5vh;
     color: white;
     background-color: #79D794;
   }
 
   .swap{
-    /*margin-top: 42%;*/
-    width: 100%;
-    height: 30%;
+    width: 100vw;
+    height: 32.5vh;
     color: white;
     background-color: #378CBC;
   }
 
-
-  .buttons{
-    height: 20%;
-    margin-top: 93%;
-    /*border-style: ridge;*/
-  }
-
   .scoreBoarder{
-    height: 30%;
+    height: 32.5vh;
     border-style: ridge;
+    text-align: center
   }
 
   .score{
-    text-align: center;
-    /*line-height: 10px*/
-    font-size: 30px;
+    font-size: 20vw;
     display: inline-block;
+    vertical-align: middle;
   }
 
   .tileHolder{
-    width: 30%;
+    width: 40vw;
     display: flex;
-    height: 4.5vh;
-    margin-top: 12%;
-    margin-left: 38%;
-    /*border: ridge;*/
+    height: 5%;
+    margin-top: 11vh;
+    margin-left: 40%;
   }
 
   .tile {
@@ -250,37 +149,348 @@ body{
     color: black;
     text-align: center;
     vertical-align: middle;
-    line-height: 2.7em;
+    line-height: 2.5em;
     vertical-align: top;
     border: solid 2px black;
     align-items: center;
     justify-content: center;
     z-index: auto;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1.2vw;
     z-index:1
   }
 
   .tilePoints{
     position: absolute;
-    /*line-height: 2em;*/
-    /*position: relative;*/
-    /*line-height: 0.002em;*/
-    font-size: 0.5em;
+    font-size: 0.5vw;
     padding-left: 10%;
     padding-top: 10%
 
   }
 
-  #tilesLeft{
-    font-size: 3em;
+  #tilesLeftBoarder{
+    float: right;
+    margin: 2% 1% 1% 0%;
+    height: 85%;
+    font-size: 3.8vw;
     color: white
-    /*color: #FB4B83;*/
+  }
+
+  #numberTiles{
+    font-size: 3.8vw;
+    color: white;
+    margin: 0;
+  }
+
+  #tilesText{
+    font-size: 3.8vw;
+    color: white;
+    margin: 0;
+  }
+
+
+  #title{
+    font-size: 3.8vw;
+    color: white;
+    margin: 0;
+  }
+
+
+  .scoreBoards{
+    float: left;
+    margin: 2% 1% 0 4%;
+    height: 85%;
+    width: 15%;
+    /*border: solid 2px black;*/
+  }
+
+  .playerScoreBoards{
+    margin-top: 13%;
+    height: 30%;
+    width: 80%;
+    background-color: 	#edf5f4;
+    border-style: ridge;
+    overflow: visible;
+    /*border: solid 2px black;*/
+  }
+
+  .play{
+    width: 100%;
+    height: 32.5%;
+    color: white;
+    background-color: #79D794;
+  }
+
+  .swap{
+    width: 100%;
+    height: 32.5%;
+    color: white;
+    background-color: #378CBC;
+  }
+
+  .scoreBoarder{
+    height: 32.5%;
+    border-style: ridge;
+    text-align: center
+  }
+
+  .score{
+    font-size: 30px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .tileHolder{
+    width: 30vw;
+    display: flex;
+    height: 5%;
+    margin-top: 11%;
+    margin-left: 40%;
+  }
+
+  .tile {
+    position: relative;
+    flex-grow: 1;
+    max-width: 100px;
+    height: 100%;
+    background-color: white;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2.5em;
+    vertical-align: top;
+    border: solid 2px black;
+    align-items: center;
+    justify-content: center;
+    z-index: auto;
+    font-weight: bold;
+    font-size: 1.2vw;
+    z-index:1
+  }
+
+  .tilePoints{
+    position: absolute;
+    font-size: 0.5vw;
+    padding-left: 10%;
+    padding-top: 10%
+
+  }
+
+  #tilesLeftBoarder{
+    float: right;
+    margin: 2% 1% 1% 0%;
+    height: 85%;
+    font-size: 3.8vw;
+    color: white
+  }
+
+  #numberTiles{
+    font-size: 3.8vw;
+    color: white;
+    margin: 0;
+  }
+
+  #tilesText{
+    font-size: 3.8vw;
+    color: white;
+    margin: 0;
+  }
+
+
+  #title{
+    font-size: 3.8vw;
+    color: white;
+    margin: 0;
+  }
+
+
+@media (min-width: 992px){
+  #board {
+    width: 70%;
+    height: 70vh;
+  }
+
+  .cellN{
+    width: 5.8%;
+    height: 7%;
+    background-color: #edf5f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cellG {
+    width: 5.8%;
+    height: 7%;
+    border-style: ridge;
+    background-color: #79D794;
+    color: white;
+    font-size: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cellB {
+    width: 5.8%;
+    height: 7%;
+    border-style: ridge;
+    background-color: #378CBC;
+    color: white;
+    font-size: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cellY {
+    width: 5.8%;
+    height: 7%;
+    border-style: ridge;
+    background-color: #f7dd80;
+    border-style: ridge;
+    text-align: center;
+    font-size: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cellR {
+    width: 5.8%;
+    height: 7%;
+    border-style: ridge;
+    background-color: #FB4B83;
+    color: white;
+    text-align: center;
+    font-size: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cellS {
+    width: 5.8%;
+    height: 7%;
+    border-style: ridge;
+    display: flex;
+    color: white;
+    font-size: 1vw;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .scoreBoards{
+    float: left;
+    margin: 2% 1% 0 4%;
+    height: 85%;
+    width: 15%;
+    /*border: solid 2px black;*/
+  }
+
+  .playerScoreBoards{
+    margin-top: 13%;
+    height: 30%;
+    width: 80%;
+    background-color: 	#edf5f4;
+    border-style: ridge;
+    overflow: visible;
+    /*border: solid 2px black;*/
+  }
+
+  .play{
+    width: 100%;
+    height: 32.5%;
+    color: white;
+    background-color: #79D794;
+  }
+
+  .swap{
+    width: 100%;
+    height: 32.5%;
+    color: white;
+    background-color: #378CBC;
+  }
+
+  .scoreBoarder{
+    height: 32.5%;
+    border-style: ridge;
+    text-align: center
+  }
+
+  .score{
+    font-size: 30px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .tileHolder{
+    width: 30vw;
+    display: flex;
+    height: 5%;
+    margin-top: 11%;
+    margin-left: 40%;
+  }
+
+  .tile {
+    position: relative;
+    flex-grow: 1;
+    max-width: 100px;
+    height: 100%;
+    background-color: white;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2.5em;
+    vertical-align: top;
+    border: solid 2px black;
+    align-items: center;
+    justify-content: center;
+    z-index: auto;
+    font-weight: bold;
+    font-size: 1.2vw;
+    z-index:1
+  }
+
+  .tilePoints{
+    position: absolute;
+    font-size: 0.5vw;
+    padding-left: 10%;
+    padding-top: 10%
+
+  }
+
+  #tilesLeftBoarder{
+    float: right;
+    margin: 2% 1% 1% 0%;
+    height: 85%;
+    font-size: 3.8vw;
+    color: white
+  }
+
+  #numberTiles{
+    font-size: 3.8vw;
+    color: white;
+    margin: 0;
+  }
+
+  #tilesText{
+    font-size: 3.8vw;
+    color: white;
+    margin: 0;
+  }
+
+
+  #title{
+    font-size: 3.8vw;
+    color: white;
+    margin: 0;
   }
 
   .color {
     border-color: #FB4B83;
-    /*background-color: yellow;*/
   }
 
 }
