@@ -11,31 +11,35 @@ window.onload = function(){
 
 function click (){
     var tile = $('.tile').click(function(e) {
-      var letter = e.currentTarget.innerText.split('')[0];
-      var points = e.currentTarget.innerText.split('')[1];
+      var title = e.currentTarget.innerText.split('')[0];
+      var points = parseInt(e.currentTarget.innerText.split('')[1]);
       var id = e.target.id;
-      var tile = {letter, points,id};
+      var tile = {title, points,id};
       var that = this;
-      e.target.className.split(' ').length > 1 ? takeLetters(that,id): pickLetterForSwap(that,tile) ;
+      e.target.className.split(' ').length > 1 ? takeLetters(that,id,tile): pickLetterForSwap(that,tile) ;
     });
 }
 
-function takeLetters (that,id){
+function takeLetters (that,id,tile){
   $(that).removeClass("color");
+  game.playerTurn.tiles.push(tile);
   game.swapLetters = game.swapLetters.filter((tileObject)=>{
-  return tileObject.id !== id;
+  if(tileObject.id != id) {return tileObject;}
   });
 }
 
 function pickLetterForSwap(that,tile){
   $(that).addClass("color");
   game.swapLetters.push(tile);
+  game.playerTurn.tiles = game.playerTurn.tiles.filter((tileObject)=>{
+  if(tileObject.id != tile.id) {return tileObject};
+  });
 }
 
 //Game functions
 function playWord(){
  game.checkWords();
- game.incorrectWord !== true ? nextTurn() : game.replay();
+ game.incorrectWord !== true ? nextTurn() : replayWord();
 }
 
 function nextTurn(){
@@ -48,7 +52,11 @@ function nextTurn(){
   $("#tilesLeft").text(`${game.tiles.length} tiles left`);
   hidePlayerBoard();
   click();
-  console.log("game", game)
+}
+
+function replayWord(){
+  removeTilesAfterWrongWord();
+  game.replay();
 }
 
 function getTiles() {
@@ -73,13 +81,23 @@ function swap(){
 }
 
 function removeTiles(){
-  var swapArray = [];
-  game.swapLetters === [] ? swapArray = game.swapLetters : swapArray = game.playerTurn.tiles;
+  var swapArray = game.playerTurn.tiles.concat(game.swapLetters);
   swapArray.forEach((tile)=>{
     $('#' + tile.id).remove();
   });
-  game.swapArray = [];
 }
+
+function removeTilesAfterWrongWord(){
+  game.word.forEach((tile)=>{
+    $('#' + tile.id).remove();
+    var newTile = $("<div>").addClass('tile').attr( 'id', tile.id).attr('draggable','true').attr('ondragstart','drag(event)').text(tile.value.split('')[0]);
+    var score = $("<span>").text(tile.value.split('')[1]).addClass('tilePoints');
+    newTile.append(score);
+    $('#tileHolder').append(newTile);
+  });
+  game.word = [];
+}
+
 
 function hidePlayerBoard(){
   if(game.playerTurn.name === "playerOne"){
@@ -123,22 +141,24 @@ function allowDrop(ev, el) {
 
 
 function drag(ev,el) {
+  var parentId = ev.target.parentNode.id;
+  var evId = ev.target.id;
   if(ev.target.parentNode.parentNode.id === "board") {
-    if(game.currentBoard[ev.target.parentNode.id.split('-')[0]][ev.target.parentNode.id.split('-')[1]] !== false){
-      game.currentBoard[ev.target.parentNode.id.split('-')[0]][ev.target.parentNode.id.split('-')[1]] = f;
-      // ev.target.parentNode.textContent = $('#'+ ev.target.id).attr( "alt") ;
+    if(game.currentBoard[parentId.split('-')[0]][parentId.split('-')[1]] !== false){
+      game.currentBoard[parentId.split('-')[0]][parentId.split('-')[1]] = f;
     }
   }
-  ev.dataTransfer.setData("dragged-id", ev.target.id);
+  ev.dataTransfer.setData("dragged-id", evId);
   ev.dataTransfer.setData("value", ev.target.textContent);
 }
 
 function drop(ev) {
   var data = ev.dataTransfer.getData("dragged-id");
   var valueSpanElement = ev.dataTransfer.getData("value");
-  if (ev.target.parentNode.id === "tileHolder") {
+  var parentId = ev.target.parentNode.id;
+  if (parentId === "tileHolder") {
     ev.target.parentNode.appendChild(document.getElementById(data));
-  } else if (ev.target.parentNode.id === "board"){
+  } else if (parentId === "board"){
     var tile = {value: valueSpanElement, position: ev.target.id, id: data, specialCell: ev.target.textContent};
     ev.target.textContent !== "" ? $('#'+ data).attr( "alt", ev.target.textContent )  : "";
     ev.target.textContent = '';

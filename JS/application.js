@@ -80,7 +80,7 @@ Scrabble.prototype.takeTile = function() {
 };
 
 Scrabble.prototype.fillArrayOfLetters = function() {
-  for (var i = 0; this.playerTurn.tiles.length < 7; i++) {
+  for (var i = this.playerTurn.tiles.length; this.playerTurn.tiles.length < 7; i++) {
       this.takeTile();
   }
 };
@@ -93,15 +93,12 @@ Scrabble.prototype.takeLetterBack = function(position,tile){
 
 Scrabble.prototype.letterSwap = function(){
   var swapArray = [];
-  this.swapLetters !== [] ? swapArray = this.swapLetters : swapArray = this.playerTurn.tiles ;
+  this.swapLetters.length !== 0 ? swapArray = this.swapLetters : swapArray = this.playerTurn.tiles ;
   swapArray.forEach((letter,index)=>{
      this.tiles.push(letter.title + ","+letter.points);
-    this.playerTurn.tiles.forEach((tile,index)=>{
-      if(letter.title  === tile.id) {
-        this.playerTurn.splice(this.playerTurn.indexOf(tile),1);
-      }
-    });
   });
+  this.swapLetters.length === 0 ? this.playerTurn.tiles = [] : "";
+  this.swapLetters = [];
 };
 
 Scrabble.prototype.sortWordArray = function() {
@@ -110,32 +107,18 @@ return this.word.sort((a,b) => {
   });
 };
 
-// Scrabble.prototype.checkWords = function() {
-//   this.sortWordArray();
-//   var startPositionLeft = this.word[0];
-//   var startPositionTop = this.word[0];
-//   if(this.currentBoard[startPositionLeft.position.split("-")[0]][parseInt(startPositionLeft.position.split('-')[1]) - 1] !== f){
-//   for(var i = 0; this.currentBoard[parseInt(this.word[0].position.split("-")[0])][parseInt(this.word[0].position.split('-')[1]) - i] !== f;i++){
-//     startPositionLeft.position = this.word[0].position.split('-')[0] + "-" + (parseInt(this.word[0].position.split('-')[1]) - i);
-//   }}
-//   if(this.currentBoard[parseInt(startPositionTop.position.split("-")[0]) - 1][parseInt(startPositionTop.position.split('-')[1])] !== f){
-//   for(var j = 0; this.currentBoard[parseInt(this.word[0].position.split("-")[0]) - j][parseInt(this.word[0].position.split('-')[1])] !== f;j++){
-//     startPositionTop.position = (parseInt(this.word[0].position.split('-')[0]) - j )+ "-" + (parseInt(this.word[0].position.split('-')[1]));
-//   }}
-//    this.currentBoard[startPositionLeft.position.split("-")[0]][parseInt(startPositionLeft.position.split('-')[1]) + 1] !== f ? this.checkLeftToRight(startPositionLeft):"";
-//    this.currentBoard[parseInt(startPositionTop.position.split("-")[0]) + 1][parseInt(startPositionTop.position.split('-')[1])] !== f ? this.checkTopToButtom(startPositionTop):"";
-// };
-
 Scrabble.prototype.checkWords = function() {
   this.sortWordArray();
   var startPosition = this.word[0];
-  this.word[0].position.split("-")[0] === this.word[1].position.split("-")[0] ? this.horizontal = true : this.horizontal = false;
+  if(this.word.length > 1){  this.word[0].position.split("-")[0] === this.word[1].position.split("-")[0] ? this.horizontal = true : this.horizontal = false;
+}
   this.getMostLeftPostion(startPosition);
   this.getTopPosition(startPosition);
 };
 
 
 Scrabble.prototype.getMostLeftPostion = function(startPosition) {
+  console.log(startPosition);
   if(this.currentBoard[startPosition.position.split("-")[0]][parseInt(startPosition.position.split('-')[1]) - 1] !== f){
   for(var i = 0; this.currentBoard[parseInt(this.word[0].position.split("-")[0])][parseInt(this.word[0].position.split('-')[1]) - i] !== f;i++){
     startPosition.position = this.word[0].position.split('-')[0] + "-" + (parseInt(this.word[0].position.split('-')[1]) - i);
@@ -144,7 +127,6 @@ Scrabble.prototype.getMostLeftPostion = function(startPosition) {
 };
 
 Scrabble.prototype.getTopPosition = function(startPosition) {
-  console.log("startPosition", startPosition);
   if(this.currentBoard[parseInt(startPosition.position.split("-")[0]) - 1][parseInt(startPosition.position.split('-')[1])] !== f){
   for(var j = 0; this.currentBoard[parseInt(this.word[0].position.split("-")[0]) - j][parseInt(this.word[0].position.split('-')[1])] !== f;j++){
     startPosition.position = (parseInt(this.word[0].position.split('-')[0]) - j )+ "-" + (parseInt(this.word[0].position.split('-')[1]));
@@ -158,8 +140,6 @@ Scrabble.prototype.checkLeftToRight = function(startPosition) {
     wordArray.push(this.currentBoard[startPosition.position.split("-")[0]][parseInt(startPosition.position.split('-')[1]) + i]);
   }
   this.checkIfWordIsCorrect(wordArray);
-  console.log("wordArray", wordArray);
-  // this.checkEveryLetterForVerticalWords();
 };
 
 Scrabble.prototype.checkTopToButtom = function(startPosition) {
@@ -168,8 +148,6 @@ Scrabble.prototype.checkTopToButtom = function(startPosition) {
     wordArray.push(this.currentBoard[parseInt(startPosition.position.split("-")[0]) + i][parseInt(startPosition.position.split('-')[1])]);
   }
   this.checkIfWordIsCorrect(wordArray);
-  console.log("wordArray2", wordArray);
-  // this.checkEveryLetterForHorizontalWords();
 };
 
 Scrabble.prototype.checkEveryLetterForVerticalWords = function() {
@@ -187,25 +165,7 @@ Scrabble.prototype.checkEveryLetterForHorizontalWords = function() {
   }
 };
 
-// Scrabble.prototype.checkLeftToRight = function(startPosition) {
-//   var wordArray = [];
-//   for(var i = 0; this.currentBoard[parseInt(startPosition.position.split("-")[0])][parseInt(startPosition.position.split('-')[1]) + i] !== f;i++){
-//     wordArray.push(this.currentBoard[startPosition.position.split("-")[0]][parseInt(startPosition.position.split('-')[1]) + i]);
-//   }
-//   this.checkIfWordIsCorrect(wordArray);
-// };
-//
-// Scrabble.prototype.checkTopToButtom = function(startPosition) {
-//   var wordArray = [];
-//   for(var i = 0; this.currentBoard[parseInt(startPosition.position.split("-")[0]) + i][parseInt(startPosition.position.split('-')[1])] !== f;i++){
-//     wordArray.push(this.currentBoard[parseInt(startPosition.position.split("-")[0]) + i][parseInt(startPosition.position.split('-')[1])]);
-//   }
-//   this.checkIfWordIsCorrect(wordArray);
-// };
-
-
 Scrabble.prototype.checkIfWordIsCorrect = function(wordArray) {
-  console.log("wordCheck",wordArray);
   var word = wordArray.map((element)=>{
     return element.value.split('')[0].toLowerCase();
   });
@@ -253,7 +213,6 @@ Scrabble.prototype.replay = function() {
   this.temporaryPoints = 0;
   this.incorrectWord = false;
   this.horizontal = false;
-  this.word = []
 };
 
 Scrabble.prototype.changePlayer = function() {
